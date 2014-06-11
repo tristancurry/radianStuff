@@ -15,12 +15,15 @@ class NumberedBalloon {
   float veloY;
   
   int balloonAlpha;
+  int shadowAlpha;
   color balloonColour;
+  color shadowColour;
   
   float rotationSpeed;
   float angle;
   
   int balloonTimer;
+  boolean fragment = false;
  
   //////////////////////
   //the CONSTRUCTOR (a function that runs once, when a new instance of the object is created)
@@ -29,7 +32,7 @@ class NumberedBalloon {
   NumberedBalloon(float _posiX, float _posiY, float _veloX, float _veloY, color _colour){
     
     serialNumber = balloonNumber;
-    balloonNumber ++;   //increase the global balloon number, so that the next one has a higher number
+    
     
     posiX = _posiX;     //start the balloon with the values specified when it was created
     posiY = _posiY;
@@ -43,6 +46,7 @@ class NumberedBalloon {
     
     balloonTimer = 0;
     balloonColour = color(red(_colour),green(_colour),blue(_colour),balloonAlpha);
+    shadowColour = color(0,0,0);
     diceRoll = floor(random(1,11));
   }
   
@@ -113,8 +117,8 @@ class NumberedBalloon {
        textAlign(CENTER, CENTER);
        textSize(24);
        translate(2,-3);
-       fill(0,0,0,balloonAlpha);       //slight adjustment to centre the text a bit better!
-       text(serialNumber,0,0);
+       fill(red(shadowColour),green(shadowColour),blue(shadowColour),shadowAlpha);       //slight adjustment to centre the text a bit better!
+      text(serialNumber,0,0);
        translate(-2,-2);            //slight adjustment to centre the text a bit better!
         fill(red(balloonColour),green(balloonColour),blue(balloonColour),balloonAlpha);
        text(serialNumber,0,0);
@@ -127,6 +131,7 @@ class NumberedBalloon {
       balloonColour = color(red(balloonColour),green(balloonColour),blue(balloonColour),balloonAlpha);
      if(balloonAlpha > 0){
        balloonAlpha = balloonAlpha - 2;
+       shadowAlpha = shadowAlpha - 2;
        
      //alternatively, maybe you want the transparency to increase and decrease periodically - use a periodic function like sine.
      //you might have to declare some of the variables as floats instead of ints though.
